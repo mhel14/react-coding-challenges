@@ -10,7 +10,6 @@ export default class Discover extends Component {
     super();
 
     this.state = {
-      accessToken: '',
       newReleases: [],
       playlists: [],
       categories: []
@@ -31,23 +30,17 @@ export default class Discover extends Component {
       })
       
       if(access_token) {
-        this.setState({
-          accessToken: access_token
-        });
-      }
-
-      if(this.state.accessToken) {
-        this.handleFetchNewRealeases();
-        this.handleFetchFeaturedPlaylist();
-        this.handleFetchGenreCategories();
+        this.handleFetchNewRealeases(access_token);
+        this.handleFetchFeaturedPlaylist(access_token);
+        this.handleFetchGenreCategories(access_token);
       }
     } catch(err) {
       console.error('Authorization', err)
     }
   }
 
-  handleFetchNewRealeases = async () => {
-    const { albums } = await fetcher('/browse/new-releases', this.state.accessToken) || [];
+  handleFetchNewRealeases = async (accessToken) => {
+    const { albums } = await fetcher('/browse/new-releases', accessToken) || [];
 
     if(albums) {
       this.setState({
@@ -56,8 +49,8 @@ export default class Discover extends Component {
     }
   }
 
-  handleFetchFeaturedPlaylist = async () => {
-    const { playlists } = await fetcher('/browse/featured-playlists', this.state.accessToken) || [];
+  handleFetchFeaturedPlaylist = async (accessToken) => {
+    const { playlists } = await fetcher('/browse/featured-playlists', accessToken) || [];
 
     if(playlists) {
       this.setState({
@@ -66,8 +59,8 @@ export default class Discover extends Component {
     }
   }
 
-  handleFetchGenreCategories = async () => {
-    const { categories } = await fetcher('/browse/categories', this.state.accessToken) || [];
+  handleFetchGenreCategories = async (accessToken) => {
+    const { categories } = await fetcher('/browse/categories', accessToken) || [];
     
     if(categories) {
       this.setState({

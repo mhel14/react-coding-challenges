@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { ReactComponent as Loading } from '../../../../../assets/images/loading.svg';
 import DiscoverItem from './DiscoverItem';
 import '../styles/_discover-block.scss';
 
@@ -35,6 +36,7 @@ export default function DiscoverBlock({ text, id, data, imagesKey = 'images' }) 
         }
       </div>
       <div className="discover-block__row" id={id}>
+        {!data.length && <Loading />}
         {data.map(({ [imagesKey]: images, name }) => (
           <DiscoverItem key={name} images={images} name={name} />
         ))}
